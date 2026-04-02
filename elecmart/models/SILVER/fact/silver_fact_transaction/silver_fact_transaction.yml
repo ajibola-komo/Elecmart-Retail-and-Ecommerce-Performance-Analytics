@@ -1,0 +1,76 @@
+version: 2
+
+models:
+  - name: silver_fact_transaction
+    description: Silver layer table of silver_fact_sale
+
+    columns:
+      - name: transaction_id
+        tests:
+          - not_null
+          - unique
+      - name: transaction_timestamp
+        tests:
+          - not_null
+          - expression_is_true:
+                arguments:
+                    expression: 'transaction_timestamp <= current_timestamp()'
+      - name: transaction_date_id
+        tests:
+            - relationships:
+                to: ref('silver_dim_date')
+                field: date_id
+      - name: customer_id
+        tests:
+            - relationships:
+                to: ref('silver_dim_customer')
+                field: customer_id
+      - name: store_id
+        tests:
+            - relationships:
+                to: ref('silver_dim_store')
+                field: store_id
+      - name: sales_channel
+        tests:
+            - accepted_values:
+                arguments:
+                    values: ['web', 'mobile', 'store']
+      - name: session_id
+        tests:
+            - relationships:
+                to: ref('silver_fact_clickstream')
+                field: session_id
+      - name: promo_id
+        tests:
+            - relationships:
+                to: ref('silver_dim_promotion')
+                field: promo_id
+      - name: campaign_id
+        tests:
+            - relationships:
+                to: ref('silver_dim_campaign')
+                field: campaign_id
+      - name: transaction_subtotal
+        tests:
+            - not_null
+      - name: transaction_discount_applied
+        tests:
+            - not_null
+      - name: transaction_total
+        tests:
+            - not_null
+      - name: items_count
+        tests:
+            - not_null
+      - name: payment_type
+        tests:
+            - not_null
+            - accepted_values:
+                values: ["Credit Card", "Debit Card", "Cash", "Gift Card", "Apple Pay", "Google Pay","PayPal"]
+      - name: transaction_status
+        tests:
+            - not_null
+            - accepted_values:
+                values: ["Completed", "Cancelled", "Refunded"]
+
+    

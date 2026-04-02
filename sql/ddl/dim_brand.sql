@@ -1,0 +1,4 @@
+CREATE TABLE DIM_BRAND (
+    Brand_ID INT PRIMARY KEY,
+    Brand_Name VARCHAR
+);

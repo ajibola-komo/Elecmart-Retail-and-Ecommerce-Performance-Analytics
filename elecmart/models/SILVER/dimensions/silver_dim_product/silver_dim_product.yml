@@ -1,0 +1,53 @@
+version: 2
+
+models:
+  - name: silver_dim_product
+    description: "Silver layer table of dim_product"
+    columns:
+      - name: product_id
+        tests:
+          - not_null
+          - unique
+      - name: product_name
+        tests:
+          - not_null
+      - name: category_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('silver_dim_category')
+              field: category_id
+      - name: subcategory_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('silver_dim_subcategory')
+              field: subcategory_id
+      - name: brand_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('silver_dim_brand')
+              field: brand_id
+      - name: unit_cost
+        tests:
+          - not_null
+          - expression_is_true:
+                expression: "unit_cost >= 0"
+      - name: unit_price
+        tests:
+          - not_null
+          - expression_is_true:
+                expression: "unit_price >= 0"
+      - name: warranty_years
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [0, 1, 2]
+      - name: product_segment
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Low', 'Entry Level', 'Mid Tier', 'High End', 'Flagship']

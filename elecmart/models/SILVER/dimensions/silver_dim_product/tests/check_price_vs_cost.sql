@@ -1,0 +1,1 @@
+select * from {{ref('silver_dim_product')}} where unit_cost >= unit_price or unit_cost is null or unit_price is null

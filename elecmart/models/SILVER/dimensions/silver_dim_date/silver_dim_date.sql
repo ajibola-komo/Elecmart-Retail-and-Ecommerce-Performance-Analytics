@@ -1,0 +1,1 @@
+select *, DAY(LAST_DAY(DATE)) as days_in_month from {{source('bronze','dim_date')}}

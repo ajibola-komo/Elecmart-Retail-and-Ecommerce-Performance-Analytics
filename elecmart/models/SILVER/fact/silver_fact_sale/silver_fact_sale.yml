@@ -1,0 +1,69 @@
+version: 2
+
+models:
+  - name: silver_fact_sale
+    description: "Silver layer table of silver_fact_sale"
+    columns:
+      - name: sale_id
+        tests:
+          - not_null
+          - unique
+      - name: transaction_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('silver_fact_transaction')
+              field: transaction_id
+      - name: session_id
+        tests:
+          - relationships:
+              to: ref('silver_fact_clickstream')
+              field: session_id
+      - name: transaction_timestamp
+        tests:
+          - not_null
+          - expression_is_true:
+              arguments:
+                expression: "transaction_timestamp < current_timestamp()"
+      - name: transaction_date_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('silver_dim_date')
+              field: date_id
+      - name: product_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('silver_dim_product')
+              field: product_id
+      - name: quantity
+        tests:
+          - not_null
+          - expression_is_true:
+              arguments:
+                expression: "quantity > 0"
+      - name: unit_cost
+        tests:
+          - not_null
+          - expression_is_true:
+              arguments:
+                expression: "unit_cost >= 0"
+      - name: unit_price
+        tests:
+          - not_null
+          - expression_is_true:
+              arguments:
+                expression: "unit_price >= 0 and unit_price > unit_cost"
+      - name: line_cost
+        tests:
+          - not_null
+          - expression_is_true:
+              arguments:
+                expression: "line_cost = quantity * unit_cost"
+      - name: line_total
+        tests:
+          - not_null
+          - expression_is_true:
+              arguments:
+                expression: "line_total = quantity * unit_price"

@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: bronze                          # logical name used in dbt ({{ source('bronze', 'table') }})
+    database: ELECMART                    # Snowflake database
+    schema: BRONZE                        # Snowflake schema
+    description: "Raw ingested data from S3 via Snowflake external stage"
+
+    tables:
+      - name: dim_customer
+      - name: dim_campaign
+      - name: dim_date
+      - name: dim_category
+      - name: dim_subcategory
+      - name: dim_brand
+      - name: dim_product
+      - name: dim_location
+      - name: dim_promotion
+      - name: dim_store
+      - name: fact_clickstream
+      - name: fact_sale
+      - name: fact_transaction
+      - name: inventory

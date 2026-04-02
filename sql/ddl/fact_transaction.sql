@@ -1,0 +1,22 @@
+CREATE TABLE FACT_TRANSACTION (
+    transaction_id int primary key,
+    transaction_timestamp timestamp,
+    transaction_date_id int,
+    customer_id int,
+    store_id int,
+    sales_channel varchar,
+    session_id int,
+    promo_id int,
+    campaign_id int,
+    transaction_subtotal decimal(10,2),
+    transaction_discount_applied decimal(10,2),
+    transaction_total decimal(10,2),
+    items_count int,
+    payment_type varchar,
+    transaction_status varchar,
+    foreign key (transaction_date_id) references DIM_DATE(date_id),
+    foreign key (customer_id) references DIM_CUSTOMER(customer_id),
+    foreign key (store_id) references DIM_STORE(store_id),
+    foreign key (promo_id) references DIM_PROMOTION(promo_id),
+    foreign key (campaign_id) references DIM_CAMPAIGN(campaign_id)
+);

@@ -1,0 +1,133 @@
+version: 2
+
+models:
+  - name: silver_dim_customer
+    description: > 
+                  Silver layer dimension table containing standardized and deduplicated customer data. 
+                  This model ensures consistent customer information across the dataset by applying
+                  data quality and normalization rules. It serves as the authoritative source for
+                  customer-level analysis and is joined with sales and marketing data to support
+                  performance, segmentation, and personalization reporting.
+
+    columns:
+      - name: customer_id
+        description: Unique identifier for each customer
+        tests:
+          - not_null
+          - unique
+      - name: email_address
+        description: Unique email address of the customer which serves as a key for customer identification and communication
+        tests:
+          - unique:
+              severity: warn
+          - not_null
+      - name: first_name
+        description: First name of the customer
+        tests:
+          - not_null
+      - name: last_name
+        description: Last name of the customer
+        tests:
+          - not_null
+      - name: gender
+        description: Gender of the customer
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['male', 'female', 'other']
+      - name: customer_persona
+        description: > 
+          Customer persona representing typical behavior and preferences.
+          This field is synthetically generated for simulation and modeling purposes
+          and does not reflect real customer data.
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Tech Enthusiast', 'Bargain Hunter', 'Gift Shopper', 'Practical Buyer', 'Everyday Shopper']
+      - name: birth_date
+        description: Birth date of the customer
+        tests:
+          - not_null
+      - name: birth_year
+        description: Year of birth of the customer
+        tests:
+          - not_null
+      - name: age
+        description: Age of the customer
+        tests:
+          - not_null
+          - expression_is_true:
+              arguments:
+                expression: "age BETWEEN 18 AND 100"
+      - name: age_group
+        description: >
+          Age group of the customer based on predefined age ranges (e.g., '18-24', '25-34', '35-44', '45-54', '55+'). 
+          This field is derived from the age column and is used for demographic segmentation and analysis.
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['18-24', '25-34', '35-44', '45-54', '55+']
+      - name: location_id
+        description: >
+          Foreign key linking to the location dimension, representing the customer's primary location. 
+          This field is used to analyze customer distribution and regional performance.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('silver_dim_location')
+              field: location_id
+      - name: signup_date
+        description: Date when the customer signed up or made their first purchase
+        tests:
+          - not_null
+          - expression_is_true:
+              arguments:
+                expression: "signup_date <= current_date"
+      - name: signup_date_id
+        description: >
+          Foreign key linking to the date dimension, representing the date when the customer signed up or made their first purchase. 
+          This field is used for time-based analysis and reporting.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('silver_dim_date')
+              field: date_id
+      - name: signup_channel
+        description: >
+          Channel through which the customer signed up or made their first purchase. 
+          This field is used for marketing and sales analysis.
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['web', 'mobile', 'store']
+      - name: loyalty_status
+        description: >
+          Loyalty status of the customer, indicating their level of engagement and commitment to the brand. 
+          This field is used for targeted marketing and customer retention strategies.
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['basic', 'silver', 'gold', 'elite']
+      - name: estimated_annual_income
+        description: >
+          Estimated annual income of the customer. This field is used for demographic analysis and targeted marketing.
+        tests:
+          - not_null
+          - expression_is_true:
+              arguments:
+                expression: "estimated_annual_income > 0"
+      - name: sms_opt_in
+        description: >
+          Indicates whether the customer has opted in to receive SMS notifications.
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['true', 'false']
+      - name: email_opt_in
+        description: >
+          Indicates whether the customer has opted in to receive email notifications.
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['true', 'false']
+

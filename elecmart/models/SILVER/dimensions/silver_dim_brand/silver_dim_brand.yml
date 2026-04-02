@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: silver_dim_brand
+    description: > 
+                  Silver layer dimension table containing standardized and deduplicated brand data. 
+                  This model ensures consistent brand naming and classification across the dataset
+                  by applying data quality and normalization rules. It serves as the authoritative
+                  source for brand-level analysis and is joined with product data to
+                  support performance and segmentation reporting.
+    columns:
+      - name: brand_id
+        description: Unique identifier for each brand
+        tests:
+          - not_null
+          - unique
+      - name: brand_name
+        description: Name of the brand
+        tests:
+          - not_null

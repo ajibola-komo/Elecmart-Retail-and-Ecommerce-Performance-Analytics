@@ -1,0 +1,49 @@
+version: 2
+
+models:
+  - name: silver_dim_store
+    description: "Silver layer table of dim_store"
+    columns:
+      - name: store_id
+        tests:
+          - not_null
+          - unique
+      - name: store_name
+        tests:
+          - not_null
+      - name: location_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('silver_dim_location')
+              field: location_id
+      - name: store_type
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Mall', 'Standalone', 'Outlet', 'Warehouse']
+      - name: store_size
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: 'store_size > 0'
+      - name: opening_date
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: 'opening_date <= CURRENT_DATE'
+      - name: opening_date_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('silver_dim_date')
+              field: date_id
+      - name: foot_traffic_index
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+                arguments:
+                    expression: 'foot_traffic_index >= 0 AND foot_traffic_index <= 100'

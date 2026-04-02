@@ -1,0 +1,1 @@
+select subcategory_id, initcap(subcategory_name) as subcategory_name, category_id from {{source('bronze','dim_subcategory')}}

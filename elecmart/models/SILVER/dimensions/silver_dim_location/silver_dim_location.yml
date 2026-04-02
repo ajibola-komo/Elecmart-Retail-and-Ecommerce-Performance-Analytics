@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: silver_dim_location
+    description: "Silver layer table of dim_location"
+    columns:
+      - name: location_id
+        tests:
+          - not_null
+          - unique
+      - name: country
+        tests:
+          - not_null
+          - accepted_values:
+                values: ['Canada']
+      - name: state_province
+        tests:
+          - not_null
+      - name: city
+        tests:
+          - not_null
+      - name: location_type
+        tests:
+          - not_null

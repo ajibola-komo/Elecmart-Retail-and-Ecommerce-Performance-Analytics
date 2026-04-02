@@ -1,0 +1,279 @@
+import numpy as np
+from datetime import timedelta, datetime, time, date
+
+BASE_TRANSACTION_TIME_STAMP = datetime.now() - timedelta(days=365)
+CURRENT_YEAR = datetime.now().year
+CURRENT_DATE = datetime.now().date()
+CURRENT_TIMESTAMP = datetime.now()
+COMPANY_START_TIMESTAMP = datetime.combine(date(2001,5,30), time(10,0,0))
+COMPANY_START_DATE = date(2001,5,30)
+
+#-------------------------- LOCATIONS TABLE -----------------------------------------
+
+
+#--------------------------- CUSTOMERS TABLE -----------------------------------------
+
+PROVINCE_CITY_MAP = {
+    "Ontario": {
+        "cities": ["Toronto", "Ottawa", "Mississauga", "London", "Hamilton"],
+        "location_type": ["Urban", "Urban", "Suburban", "Suburban", "Suburban"],
+        "location_weights": [0.1, 0.07, 0.05, 0.04, 0.04],
+        #"foot_traffic_range": (80, 90)
+    },
+
+    "Quebec": {
+        "cities": ["Montreal", "Quebec City", "Laval", "Gatineau"],
+        "location_type": ["Urban", "Urban", "Suburban", "Suburban"],
+        "location_weights": [0.1, 0.05, 0.03, 0.02],
+        #"foot_traffic_range": (70, 85)
+    },
+
+    "British Columbia": {
+        "cities": ["Vancouver", "Surrey", "Burnaby", "Victoria"],
+        "location_type": ["Urban", "Suburban", "Suburban", "Suburban"],
+        "location_weights": [0.08, 0.03, 0.02, 0.02],
+        #"foot_traffic_range": (70, 80)
+    },
+
+    "Alberta": {
+        "cities": ["Calgary", "Edmonton", "Red Deer"],
+        "location_type": ["Urban", "Urban", "Rural"],
+        "location_weights": [0.06, 0.06, 0.03],
+        #"foot_traffic_range": (60, 75)
+    },
+
+    "Manitoba": {
+        "cities": ["Winnipeg", "Brandon"],
+        "location_type": ["Urban", "Rural"],
+        "location_weights": [0.04, 0.02],
+        #"foot_traffic_range": (55, 65)
+    },
+
+    "Saskatchewan": {
+        "cities": ["Regina", "Saskatoon"],
+        "location_type": ["Suburban", "Suburban"],
+        "location_weights": [0.03, 0.01],
+        #"foot_traffic_range": (50, 65)
+    },
+
+    "Nova Scotia": {
+        "cities": ["Halifax"],
+        "location_type": ["Suburban"],
+        "location_weights": [0.02],
+        #"foot_traffic_range": (45, 55)
+    },
+
+    "New Brunswick": {
+        "cities": ["Fredericton", "Moncton"],
+        "location_type": ["Rural", "Suburban"],
+        "location_weights": [0.03, 0.02],
+        #"foot_traffic_range": (45, 55)
+    },
+
+    "Prince Edward Island": {
+        "cities": ["Charlottetown"],
+        "location_type": ["Rural"],
+        "location_weights": [0.02],
+        #"foot_traffic_range": (45, 55)
+    },
+
+    "Newfoundland & Labrador": {
+        "cities": ["St. John's"],
+        "location_type": ["Suburban"],
+        "location_weights": [0.01],
+        #"foot_traffic_range": (30, 40)
+    }
+}
+
+PROVINCES = list(PROVINCE_CITY_MAP.keys())
+
+FOOT_TRAFFIC = {
+    "Urban": (75, 90),
+    "Suburban": (50, 70),
+    "Rural": (20, 40)
+}
+
+    
+CUSTOMER_GENDER = ["Male", "Female", "Other"]
+
+CUSTOMERS_PERSONA_MAP = {
+    "Tech Enthusiast": {"age_range":(25,40), "weight":0.2, "gender_weight":[0.55,0.4,0.05], "income_range":(60_000,1_00_000)},
+    "Bargain Hunter": {"age_range":(18,35), "weight":0.25, "gender_weight":[0.5,0.45,0.05], "income_range":(10_000,50_000)},
+    "Gift Shopper": {"age_range":(28,45), "weight":0.05, "gender_weight":[0.35,0.6,0.05], "income_range":(40_000,80_000)},
+    "Everyday Shopper": {"age_range":(30,50), "weight":0.4, "gender_weight":[0.5,0.48,0.02], "income_range":(60_000,100_000)},
+    "Practical Buyer": {"age_range":(30,60), "weight":0.1, "gender_weight":[0.6,0.38,0.02], "income_range":(30_000,70_000)}
+}
+
+CUSTOMER_PERSONAS = list(CUSTOMERS_PERSONA_MAP.keys())
+PERSONA_WEIGHTS = [CUSTOMERS_PERSONA_MAP[k]['weight'] for k in CUSTOMER_PERSONAS]
+    
+CUSTOMER_SIGNUP_CHANNEL = ["In-Store", "Online", "Mobile"]
+CUSTOMER_LOYALTY_STATUS = ['Elite', 'Gold', 'Silver', 'Basic']
+CUSTOMER_EMAIL_OPT_IN = [True, False]
+CUSTOMER_SMS_OPT_IN = [True, False]
+CUSTOMER_EMAIL_DOMAIN = ['@example.com','@bac.com','@xyz.com','@mail.com']
+
+#------------------------------------- STORES TABLE -----------------------------------
+COMPANY_NAME = 'ELECMART'
+STORE_TYPES_MAP = {
+    "Mall":{
+        "store_weight":0.35,
+        "store_size":(300,1200)
+    },
+    "Outlet":{
+        "store_weight":0.20,
+        "store_size":(200,900)
+    },
+    "Standalone":{
+        "store_weight":0.35,
+        "store_size":(400,1500)
+    },
+    "Warehouse":{
+        "store_weight":0.10,
+        "store_size":(3000,8000)
+    }
+}
+STORE_TYPES = list(STORE_TYPES_MAP.keys())
+STORE_WEIGHTS = [STORE_TYPES_MAP[k]['store_weight'] for k in STORE_TYPES]
+
+
+#-------------------------------------- PROMOTIONS TABLE ------------------------------
+JAN_FEB_PROMOTIONS_NAMES = ["New Year Mega Sale", "January Clearance Deals","Cold Season Appliance Sale"]
+MID_YEAR_PROMOTIONS_NAMES = ["Summer Power Sale","Hot Tech Deals","Plug-In & Save","Mobile Life Sale","Smart Summer Savings"]
+YEAR_END_PROMOTIONS_NAMES = ["Holiday Season Specials","Christmas Mega Sale","Year-End Clearance","Boxing Day Deals","Holiday Tech Gifts","End-of-Year Super Sale"]
+WEEKEND_PROMOTIONS_NAMES = ["Weekend Flash Sale","Deal of the Day","Customer Appreciation Sale","Limited Time Offers","Cyber Monday Sale"]
+PRE_HOLIDAY_PROMOTIONS_NAMES = ["Early Holiday Deals","Pre-Holiday Specials"]
+BLACK_FRIDAY_PROMOTION_NAMES = ["Black Friday Mega Deals"]
+OTHER_PROMOTIONS_NAMES = ["Power Hour Deals","Gadget Grab","Flash Tech Sale","Plug & Save","Stock-Clearance Surge"]
+
+PROMOTION_DISCOUNT_TYPES = ["Percentage_Discount","Fixed_Amount_Discount"]
+PROMOTIONS_DISCOUNT_TYPES_WEIGHTING = [0.7,0.3]
+
+PERCENTAGE_DISCOUNT_VALUES = [0.05,0.1,0.15,0.2]
+PERCENTAGE_DISCOUNT_WEIGHTING = [0.2,0.4,0.25,0.15]
+
+FIXED_AMOUNT_DISCOUNT_VALUES = [20,25]
+FIXED_AMOUNT_DISCOUNT_WEIGHTING = [0.8,0.2]
+
+PROMO_TYPE_MAP = {
+    'Major':
+    {
+        'months':[1,7,11,12],
+        'promo_duration':[7,14],
+        'cooldown':5,
+        'weight':0.4,
+        'months_weight':[0.3,0.2,0.2,0.3]
+    },
+    'Medium':
+    {
+        'months':[2,9,10],
+        'promo_duration':[5,7],
+        'cooldown':3,
+        'weight':0.35,
+        'months_weight':[0.3,0.35,0.35]
+    },
+    'Flash':
+    {
+        'months':[3,4,5,6,7,8],
+        'promo_duration':[1,3],
+        'cooldown':1,
+        'weight':0.25,
+        'months_weight':[0.15,0.15,0.15,0.2,0.15,0.2]
+    } 
+}
+PROMO_TYPES = list(PROMO_TYPE_MAP.keys())
+PROMO_TYPES_WEIGHTS = [PROMO_TYPE_MAP[k]['weight'] for k in PROMO_TYPES]
+
+#------------------------------------------------ CAMPAIGNS_TABLE ----------------------------------
+CAMPAIGN_LINK_MAP = {
+    'Promo':{
+        'weight':0.55
+    },
+    'Normal':{
+        'weight':0.45
+    }
+}
+
+CAMPAIGN_LINK = list(CAMPAIGN_LINK_MAP.keys())
+CAMPAIGN_LINK_WEIGHT = [CAMPAIGN_LINK_MAP[k]['weight'] for k in CAMPAIGN_LINK]
+
+CAMPAIGN_CHANNEL = ['Email', 'SMS', 'Google Ads']
+CAMPAIGN_CHANNELS_WEIGHTS = [0.5,0.2,0.3]
+
+CAMPAIGN_COOLDOWN_PERIODS = [2,5,7]
+
+CAMPAIGN_PERIOD_OF_VALIDITY = [3,12,24]
+
+#------------------------------------------- CLICKSTREAMS ------------------------------------------------
+SESSION_MINUTES = [0.5, 1, 2, 3, 5, 8, 12]
+SESSION_WEIGHTS = [0.15, 0.20, 0.25, 0.20, 0.12, 0.06, 0.02]
+
+DEVICE_TYPES = ["Mobile","Tablet","Desktop"]
+DEVICE_WEIGHTS = [0.55,0.3,0.15]
+
+TRAFFIC_SOURCES = ["Organic", "Paid Search", "Direct", "Referral"]
+TRAFFIC_WEIGHTS = [0.40, 0.2, 0.22, 0.18]
+
+PROB_OF_CUSTOMER_SESSION = 0.65        # Known vs guest
+PROB_OF_PURCHASE_INTENTION = 0.4       # Browsing → cart intent
+PROB_OF_PURCHASE = 0.3                 # Cart → purchase
+PROB_OF_CAMPAIGN_LINKED = 0.35         # Attribution
+PROB_OF_REPEATED_SESSION = 0.35               # Repeat visits/sessions
+
+#----------------------------------------- Transactions ------------------------------------------------------
+
+
+PAYMENT_TYPES = [
+    "Credit Card",
+    "Debit Card",
+    "Cash",
+    "Gift Card",
+    "Apple Pay",
+    "Google Pay",
+    "PayPal"
+]
+
+PAYMENT_TYPES_WEIGHTS = [0.40, 0.35, 0.10, 0.05, 0.05, 0.03, 0.02]
+
+TRANSACTION_STATUSES = [
+    "Completed",
+    "Cancelled",
+    "Refunded"]
+
+TRANSACTION_WEIGHTS = [0.92, 0.05, 0.03]
+
+TRANSACTION_TOTAL_RANGE = np.array([(20,120), (120,600), (600,3000)])
+
+TRANSACTION_TOTAL_DISTRIBUTION = [0.7,0.25,0.05]
+
+#INVENTORY TABLE
+SHRINKAGE_RATE = 0.02
+
+# FACT SALE
+SALES_START_ID = 12_000_363
+TRANSACTION_START_ID = 8_000_125
+SESSION_START_ID = 9_000_862
+
+
+MONTH_NUMBERS = [1,2,3,4,5,6,7,8,9,10,11,12]
+MONTH_WEIGHTS = [0.8, 0.85, 1.0, 1.1, 1.2, 1.3, 1.25, 1.2, 1.1, 1.3, 1.6, 1.8]
+PRODUCT_RANGES= ['Low','Mid','High']
+PRODUCT_WEIGHTS = [0.4,0.35,0.25]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

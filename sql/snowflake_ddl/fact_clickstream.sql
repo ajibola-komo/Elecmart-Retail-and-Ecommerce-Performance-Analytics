@@ -1,0 +1,21 @@
+CREATE OR REPLACE TABLE fact_clickstream (
+    session_id int primary key,
+    customer_id int,
+    session_start_time TIMESTAMP_NTZ,
+    session_start_date_id int,
+    session_end_time TIMESTAMP_NTZ,
+    session_end_date_id int,
+    device_type varchar,
+    number_of_pages_viewed int,
+    product_page_visited_flag boolean,
+    added_to_cart_flag boolean,
+    purchased_flag boolean,
+    traffic_source varchar,
+    linked_to_a_campaign_flag boolean,
+    campaign_id int,
+    aov_category varchar,
+    FOREIGN KEY(customer_id) references dim_customer(customer_id),
+    FOREIGN KEY(campaign_id) references dim_campaign(campaign_id),
+    FOREIGN KEY(session_start_date_id) references dim_date(date_id),
+    FOREIGN KEY(session_end_date_id) references dim_date(date_id)
+);

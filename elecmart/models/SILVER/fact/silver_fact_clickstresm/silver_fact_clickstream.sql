@@ -1,0 +1,15 @@
+select session_id::INTEGER as session_id,
+    customer_id::INTEGER as customer_id,
+    session_start_time::timestamp_ntz as session_start_time,
+    session_start_date_id::INTEGER as session_start_date_id,
+    session_end_time::timestamp_ntz as session_end_time,
+    session_end_date_id::INTEGER as session_end_date_id,
+    trim(device_type) as device_type,
+    number_of_pages_viewed::INTEGER as number_of_pages_viewed,
+    product_page_visited_flag::INTEGER as product_page_visited_flag,
+    lower(added_to_cart_flag) as added_to_cart_flag,
+    lower(purchased_flag) as purchased_flag,
+    traffic_source,
+    lower(linked_to_a_campaign_flag) as linked_to_a_campaign_flag,
+    campaign_id::INTEGER as campaign_id
+    from {{ source('bronze', 'fact_clickstream') }}
