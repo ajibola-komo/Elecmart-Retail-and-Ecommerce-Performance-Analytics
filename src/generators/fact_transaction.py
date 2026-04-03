@@ -80,6 +80,7 @@ def generate_transactions(conn):
     camp_promo_dict = dict(zip(all_campaigns_id,campaign_promo_ids))
 
     stores_data = conn.execute('select store_id, location_id, store_type, opening_date from dim_store').df()
+    store_location_ids = conn.execute('select distinct location_id from dim_store').df()
     stores_location_dict = dict(zip(stores_data['location_id'], stores_data['store_id']))
 
     transaction_ids = sales_data['transaction_id'].values
@@ -163,13 +164,15 @@ def generate_transactions(conn):
 
     guest_transaction = pd.isna(customers_ids)
 
-    location_ids[guest_transaction] = np.random.choice(all_location_ids, size = np.sum(guest_transaction))
+    location_ids[guest_transaction] = np.random.choice(store_location_ids['location_id'].values, size = np.sum(guest_transaction))
 
     location_ids[~guest_transaction] = pd.Series(customers_ids[~guest_transaction]).map(cust_location_dict).values
 
     store_ids = pd.Series(location_ids).map(stores_location_dict).values
 
-    
+    unassigned_store = pd.isna(store_ids)
+
+    store_ids[unassigned_store] = np.random.choice(stores_data['store_id'].values, size=np.sum(unassigned_store))
 
     transaction_statuses = np.random.choice(TRANSACTION_STATUSES, p = TRANSACTION_WEIGHTS, size = total_transactions)
 

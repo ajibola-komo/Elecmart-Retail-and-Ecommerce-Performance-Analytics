@@ -5,7 +5,7 @@ import pandas as pd
 def generate_month_distribution(num_of_records):
     date_range = pd.date_range(
         start=BASE_TRANSACTION_TIME_STAMP,
-        end=CURRENT_TIMESTAMP,
+        end=CURRENT_TIMESTAMP - pd.Timedelta(days=7),
         freq='D'
     )
 
