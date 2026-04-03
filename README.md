@@ -306,4 +306,4 @@ python -m src.generators.main
 
 ## Author
 
-**Ajibola Komolafe** — Aspiring Analytics Engineer
+**Ajibola Komolafe** — Data and Analytics Engineer (With Project Experience)
