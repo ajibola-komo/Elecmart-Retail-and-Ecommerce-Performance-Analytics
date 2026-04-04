@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: gold_kpi_overview_completed_transactions
+    description: "Gold layer table of kpi_overview_completed_transactions"
+    tests:
+        - total_sales_matches_transactions
+        - total_cost_matches_transactions
+        - gross_profit_reconciliation
+        - profit_margin_reconciliation

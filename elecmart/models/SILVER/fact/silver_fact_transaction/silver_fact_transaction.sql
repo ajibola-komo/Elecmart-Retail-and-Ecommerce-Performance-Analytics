@@ -8,9 +8,9 @@ case when sales_channel = 'In-Store' then 'store' else lower(sales_channel) end 
 session_id::INTEGER as session_id,
 promo_id::INTEGER as promo_id, 
 campaign_id::INTEGER as campaign_id,
-to_decimal(transaction_subtotal) as transaction_subtotal,
-to_decimal(transaction_discount_applied) as transaction_discount_applied,
-to_decimal(transaction_total) as transaction_total,
+cast(transaction_subtotal as decimal(10,2)) as transaction_subtotal,
+cast(transaction_discount_applied as decimal(10,2)) as transaction_discount_applied,
+cast(transaction_total as decimal(10,2)) as transaction_total,
 items_count::INTEGER as items_count, payment_type as payment_type,
 transaction_status from {{source('bronze','fact_transaction')}}
 ) select * from source
