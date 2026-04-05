@@ -4,8 +4,7 @@ select *
 from {{ model }}
 where total_completed_sales != (
     select coalesce(sum(transaction_total), 0)
-    from {{ ref('silver_fact_transaction') }}
-    where transaction_status = 'Completed'
+    from {{ ref('gold_fact_completed_transaction') }}
 )
 
 {% endtest %}

@@ -72,6 +72,6 @@ models:
         tests:
             - not_null
             - accepted_values:
-                values: ["Completed", "Cancelled", "Refunded"]
+                values: ["Completed", "Returned"]
 
     

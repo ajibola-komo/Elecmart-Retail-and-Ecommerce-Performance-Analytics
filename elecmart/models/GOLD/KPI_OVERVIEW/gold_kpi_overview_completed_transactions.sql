@@ -1,7 +1,7 @@
 with get_revenue as (
 select coalesce(sum(transaction_total), 0) as total_sales, coalesce(sum(transaction_cost), 0) as total_cost,
 count(transaction_id) as total_transactions
- from {{ref('silver_fact_transaction')}} where transaction_status = 'Completed'
+ from {{ ref('gold_fact_completed_transaction') }}
 ), 
 final as 
 (

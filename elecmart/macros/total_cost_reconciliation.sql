@@ -3,7 +3,7 @@
 select *
 from {{ model }}
 where total_cost_for_completed_transactions != (
-    select total_cost from {{ ref('get_rev_and_cost') }}
+    select coalesce(sum(transaction_cost), 0) from {{ ref('gold_fact_completed_transaction') }}
 )
 
 {% endtest %}

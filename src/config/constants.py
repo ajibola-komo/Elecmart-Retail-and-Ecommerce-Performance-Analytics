@@ -237,10 +237,9 @@ PAYMENT_TYPES_WEIGHTS = [0.40, 0.35, 0.10, 0.05, 0.05, 0.03, 0.02]
 
 TRANSACTION_STATUSES = [
     "Completed",
-    "Cancelled",
-    "Refunded"]
+    "Returned"]
 
-TRANSACTION_WEIGHTS = [0.92, 0.05, 0.03]
+TRANSACTION_WEIGHTS = [0.92, 0.08]
 
 TRANSACTION_TOTAL_RANGE = np.array([(20,120), (120,600), (600,3000)])
 

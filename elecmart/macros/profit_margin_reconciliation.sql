@@ -6,6 +6,6 @@ where profit_margin_for_completed_transactions != (
 round(
     (coalesce(sum(transaction_total),0) - coalesce(sum(transaction_cost), 0))
 / nullif(coalesce(sum(transaction_total), 0), 0) * 100, 2)
-    from {{ ref('silver_fact_transaction') }} where transaction_status = 'Completed'
+    from {{ ref('gold_fact_completed_transaction') }}
 )
 {% endtest %}

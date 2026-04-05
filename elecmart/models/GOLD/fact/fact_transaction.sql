@@ -1,1 +1,0 @@
-select * from {{ ref('silver_fact_transaction') }}
