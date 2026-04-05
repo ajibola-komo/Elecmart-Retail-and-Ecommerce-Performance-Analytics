@@ -1,4 +1,4 @@
-# Elecmart — Sales & Inventory Analytics
+# Elecmart Retail Analytics Pipeline
 
 An end-to-end data engineering project simulating a mid-sized electronics retailer, covering the full analytics lifecycle: synthetic data generation, cloud storage, warehouse ingestion, dbt transformation, and Tableau dashboards.
 
