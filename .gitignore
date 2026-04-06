@@ -20,5 +20,6 @@ dbt_internal_packages/
 .DS_Store
 Thumbs.db
 
+#data exports folder
 csv/
 parquet/
