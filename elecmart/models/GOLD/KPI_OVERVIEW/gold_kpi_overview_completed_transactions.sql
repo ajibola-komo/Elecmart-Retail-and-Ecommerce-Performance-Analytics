@@ -1,7 +1,7 @@
 with get_revenue as (
-select coalesce(sum(transaction_total), 0) as total_sales, coalesce(sum(transaction_cost), 0) as total_cost,
-count(transaction_id) as total_transactions, sum(items_count) as total_units_sold
- from {{ ref('gold_fact_completed_transaction') }}
+select coalesce(sum(net_line_revenue), 0) as total_sales, coalesce(sum(line_cost), 0) as total_cost,
+count(distinct transaction_id) as total_transactions, sum(quantity) as total_units_sold
+ from {{ ref('gold_fact_sale') }} where transaction_status = 'Completed'
 ), 
 additional_metrics as 
 (
@@ -9,11 +9,11 @@ select *, round(coalesce((total_sales - total_cost), 0), 2) as gross_profit,
 round(total_sales/nullif(total_transactions, 0), 2) as average_order_value
 from get_revenue
 ), get_returned_metrics as (
-select coalesce(sum(transaction_total), 0) as total_revenue_returned, 
-coalesce(sum(transaction_cost), 0) as total_cogs_returned,
-count(transaction_id) as total_transactions_returned, sum(items_count) as total_units_returned,
-round(coalesce((sum(transaction_total) - sum(transaction_cost)), 0), 2) as gross_profit_returned
- from {{ ref('gold_fact_returns') }}
+select coalesce(sum(net_line_revenue), 0) as total_revenue_returned, 
+coalesce(sum(line_cost), 0) as total_cogs_returned,
+count(distinct transaction_id) as total_transactions_returned, sum(quantity) as total_units_returned,
+round(coalesce((sum(net_line_revenue) - sum(line_cost)), 0), 2) as gross_profit_returned
+ from {{ ref('gold_fact_sale') }} where transaction_status = 'Returned'
 ), final as (
 select total_sales, total_cost, gross_profit, average_order_value, total_transactions, total_units_sold, 
 total_revenue_returned, total_cogs_returned, total_transactions_returned, total_units_returned, 

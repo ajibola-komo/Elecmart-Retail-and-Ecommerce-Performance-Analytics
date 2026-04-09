@@ -4,8 +4,8 @@ from {{ model }}
 where profit_margin != (
     select 
 round(
-    (coalesce(sum(transaction_total),0) - coalesce(sum(transaction_cost), 0))
-/ nullif(coalesce(sum(transaction_total), 0), 0) * 100, 2)
-    from {{ ref('gold_fact_completed_transaction') }}
+    (coalesce(sum(net_line_revenue),0) - coalesce(sum(line_cost), 0))
+/ nullif(coalesce(sum(net_line_revenue), 0), 0) * 100, 2)
+    from {{ ref('gold_fact_sale') }} where transaction_status = 'Completed'
 )
 {% endtest %}
