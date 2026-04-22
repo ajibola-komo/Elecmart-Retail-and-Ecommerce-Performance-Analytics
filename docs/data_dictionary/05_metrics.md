@@ -1,8 +1,8 @@
-# 📈 Business Metrics
+# Business Metrics
 
 ---
 
-## 💰 Revenue Metrics
+## Revenue Metrics
 
 | Metric | Definition |
 |------|----------|
@@ -13,7 +13,7 @@
 
 ---
 
-## 🛒 Sales Metrics
+## Sales Metrics
 
 | Metric | Definition |
 |------|----------|
@@ -23,7 +23,7 @@
 
 ---
 
-## 📦 Inventory Metrics
+## Inventory Metrics
 
 | Metric | Definition |
 |------|----------|
@@ -32,7 +32,7 @@
 
 ---
 
-## 👥 Customer Metrics
+## Customer Metrics
 
 | Metric | Definition |
 |------|----------|
@@ -41,7 +41,7 @@
 
 ---
 
-## 📣 Marketing Metrics
+## Marketing Metrics
 
 | Metric | Definition |
 |------|----------|

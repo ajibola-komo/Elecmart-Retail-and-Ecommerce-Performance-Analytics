@@ -1,4 +1,4 @@
-# 📊 Elecmart Retail Analytics Pipeline – Overview
+# Elecmart Retail Analytics Pipeline – Overview
 
 ## Project Summary
 This project simulates a modern retail analytics platform for a mid-sized electronics company, enabling end-to-end decision-making across:

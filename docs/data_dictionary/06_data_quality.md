@@ -1,4 +1,4 @@
-# ✅ Data Quality & Testing
+# Data Quality & Testing
 
 ## Approach
 
@@ -6,7 +6,7 @@ Data quality is enforced using dbt tests across three layers:
 
 ---
 
-## 🔹 Structural Tests
+## Structural Tests
 
 - not_null
 - unique
@@ -14,7 +14,7 @@ Data quality is enforced using dbt tests across three layers:
 
 ---
 
-## 🔹 Business Logic Tests
+## Business Logic Tests
 
 - Transaction reconciliation
 - Inventory balance validation
@@ -22,7 +22,7 @@ Data quality is enforced using dbt tests across three layers:
 
 ---
 
-## 🔹 Example Rules
+## Example Rules
 
 ### Transaction Validation
 transaction_total = sum(net_line_revenue)
@@ -35,7 +35,7 @@ age >= 18
 
 ---
 
-## 🔹 Data Freshness
+## Data Freshness
 
 - Transactions must be in the past
 - Session end ≥ session start

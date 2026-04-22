@@ -1,4 +1,4 @@
-# 🧠 Data Modeling Strategy
+# Data Modeling Strategy
 
 ## Approach
 

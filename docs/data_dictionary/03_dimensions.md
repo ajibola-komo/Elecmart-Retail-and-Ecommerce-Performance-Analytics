@@ -2,7 +2,7 @@
 
 ---
 
-## 🧍 dim_customer
+## dim_customer
 
 **Grain:** One row per customer
 
@@ -21,7 +21,7 @@ Stores customer demographics, acquisition channel, loyalty status, and marketing
 
 ---
 
-## 📦 dim_product
+## dim_product
 
 **Grain:** One row per product (SKU)
 
@@ -40,7 +40,7 @@ Product master data including category, pricing, and brand.
 
 ---
 
-## 🏬 dim_store
+## dim_store
 
 **Grain:** One row per store
 
@@ -49,7 +49,7 @@ Physical store attributes including size, type, and location.
 
 ---
 
-## 🌍 dim_location
+## dim_location
 
 **Grain:** One row per location
 
@@ -58,7 +58,7 @@ Geographic reference for stores and customers.
 
 ---
 
-## 📅 dim_date
+## dim_date
 
 **Grain:** One row per date
 
@@ -67,12 +67,12 @@ Calendar table supporting time-based analysis.
 
 ---
 
-## 📣 dim_campaign
+## dim_campaign
 
 **Grain:** One row per campaign
 
 ---
 
-## 🎯 dim_promotion
+## dim_promotion
 
 **Grain:** One row per promotion

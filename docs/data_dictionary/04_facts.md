@@ -1,8 +1,8 @@
-# 📊 Fact Tables
+# Fact Tables
 
 ---
 
-## 💰 fact_sale
+## fact_sale
 
 **Grain:** One row per product per transaction
 
@@ -17,7 +17,7 @@ Captures detailed sales data including quantity, revenue, cost, and discounts.
 
 ---
 
-## 🧾 fact_transaction
+## fact_transaction
 
 **Grain:** One row per transaction
 
@@ -26,7 +26,7 @@ Aggregated transaction-level data including totals, discounts, and payment detai
 
 ---
 
-## 📦 fact_inventory
+## fact_inventory
 
 **Grain:** One row per product per store per month
 
@@ -35,7 +35,7 @@ Tracks stock movement and inventory levels.
 
 ---
 
-## 🌐 fact_clickstream
+## fact_clickstream
 
 **Grain:** One row per session
 
