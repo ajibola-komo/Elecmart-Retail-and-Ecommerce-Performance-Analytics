@@ -1,8 +1,9 @@
 import numpy as np
 import pandas as pd
 from src.config.paths import (TRANSACTIONS_DDL_PATH, TRANSACTIONS_CSV_PATH, TRANSACTIONS_PARQUET_PATH)
-from src.config.constants import (PAYMENT_TYPES,TRANSACTION_STATUSES, 
-                                  PAYMENT_TYPES_WEIGHTS, TRANSACTION_WEIGHTS, PROB_OF_REPEATED_SESSION)
+from src.config.constants import (BASE_TRANSACTION_END_TIMESTAMP_Y1, PAYMENT_TYPES,TRANSACTION_STATUSES, 
+                                  PAYMENT_TYPES_WEIGHTS, TRANSACTION_WEIGHTS, PROB_OF_REPEATED_SESSION_Y1, PROB_OF_REPEATED_SESSION_Y2,
+                                  REPEATED_SESSION_SUBSET_PREMIUM, REPEATED_SESSION_SUBSET_MID, REPEATED_SESSION_SUBSET_BASIC)
 
 from src.generators.segment_customers import generate_customer_segments
 from src.generators.segment_stores import segment_stores
@@ -42,7 +43,7 @@ def generate_transactions(conn):
     transaction_ids = sales_data['transaction_id'].values
     total_transactions = len(transaction_ids)
     transaction_timestamps = sales_data['transaction_timestamp'].values
-    transaction_date_ids = np.array([pd.to_datetime(ts).strftime('%Y%m%d') for ts in transaction_timestamps], dtype=np.int32)
+    transaction_date_ids = pd.to_datetime(transaction_timestamps).strftime('%Y%m%d').astype(np.int32)
     transaction_subtotals = sales_data['transaction_subtotal'].values
     transaction_costs = sales_data['transaction_cost'].values
     aov_categories = sales_data['aov_category'].values
@@ -89,9 +90,9 @@ def generate_transactions(conn):
     basic_level_customers_ids = basic_level_customers['customer_id'].values
     basic_level_customer_sign_up_dates = basic_level_customers['signup_date'].values
 
-    premium_customers_subset = premium_customers.sample(frac=0.65, random_state=42)
-    mid_level_customers_subset = mid_level_customers.sample(frac=0.65, random_state=42)
-    basic_level_customers_subset = basic_level_customers.sample(frac=0.65, random_state=42)
+    premium_customers_subset = premium_customers.sample(frac=REPEATED_SESSION_SUBSET_PREMIUM, random_state=42)
+    mid_level_customers_subset = mid_level_customers.sample(frac=REPEATED_SESSION_SUBSET_MID, random_state=42)
+    basic_level_customers_subset = basic_level_customers.sample(frac=REPEATED_SESSION_SUBSET_BASIC, random_state=42)
 
     premium_subset_ids = premium_customers_subset['customer_id'].values
     premium_subset_signup_dates = premium_customers_subset['signup_date'].values
@@ -102,7 +103,12 @@ def generate_transactions(conn):
 
     in_store_indices = np.where(is_in_store_transaction)[0]
 
-    repeated_session = np.random.rand(len(in_store_indices)) <= PROB_OF_REPEATED_SESSION
+    y1_mask = pd.to_datetime(transaction_timestamps[in_store_indices]) <= pd.Timestamp(BASE_TRANSACTION_END_TIMESTAMP_Y1)
+    repeated_session = np.where(
+    y1_mask,
+    np.random.rand(len(in_store_indices)) <= PROB_OF_REPEATED_SESSION_Y1,
+    np.random.rand(len(in_store_indices)) <= PROB_OF_REPEATED_SESSION_Y2
+)
 
     locations_data = conn.execute("select location_id from dim_location").df()
     all_location_ids = locations_data['location_id']
@@ -184,7 +190,10 @@ def generate_transactions(conn):
         eligible_customers = ids[eligible_mask]
 
         if len(eligible_customers) == 0:
-                eligible_customers = all_customer_ids
+            eligible_mask = all_customer_sign_up_dates <= txn_time_np
+            eligible_customers = all_customer_ids[eligible_mask]
+            if len(eligible_customers) == 0:  
+                continue 
 
         customer_ids[idx] = np.random.choice(eligible_customers)
     

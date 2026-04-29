@@ -220,11 +220,19 @@ DEVICE_WEIGHTS = [0.55,0.3,0.15]
 TRAFFIC_SOURCES = ["Organic", "Paid Search", "Direct", "Referral"]
 TRAFFIC_WEIGHTS = [0.40, 0.2, 0.22, 0.18]
 
-PROB_OF_CUSTOMER_SESSION = 0.65        # Known vs guest
-PROB_OF_PURCHASE_INTENTION = 0.4       # Browsing → cart intent
-PROB_OF_PURCHASE = 0.3                 # Cart → purchase
-PROB_OF_CAMPAIGN_LINKED = 0.35         # Attribution
-PROB_OF_REPEATED_SESSION = 0.35               # Repeat visits/sessions
+PROB_OF_CUSTOMER_SESSION_Y1 = 0.65        # Known vs guest
+PROB_OF_CUSTOMER_SESSION_Y2 = 0.70        # Known vs guest
+PROB_OF_PURCHASE_INTENTION_Y1 = 0.38       # Browsing → cart intent
+PROB_OF_PURCHASE_INTENTION_Y2 = 0.45     # Browsing → cart intent
+PROB_OF_PURCHASE_Y1 = 0.3                 # Cart → purchase
+PROB_OF_PURCHASE_Y2 = 0.35                # Cart → purchase
+PROB_OF_CAMPAIGN_LINKED_Y1 = 0.35         # Attribution
+PROB_OF_CAMPAIGN_LINKED_Y2 = 0.40         # Attribution
+PROB_OF_REPEATED_SESSION_Y1 = 0.2               # Repeat visits/sessions
+PROB_OF_REPEATED_SESSION_Y2 = 0.25               # Repeat visits/sessions
+REPEATED_SESSION_SUBSET_PREMIUM = 0.45
+REPEATED_SESSION_SUBSET_MID = 0.35
+REPEATED_SESSION_SUBSET_BASIC = 0.6
 
 #----------------------------------------- Transactions ------------------------------------------------------
 
