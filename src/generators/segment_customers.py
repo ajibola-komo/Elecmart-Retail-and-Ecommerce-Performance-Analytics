@@ -22,23 +22,23 @@ def generate_customer_segments(conn):
 
     active_customers = all_customers[
         all_customers["is_active"]
-    ].copy()
+    ].reset_index(drop=True)
 
     premium_customers = active_customers[
         active_customers['customer_persona'] == 'Tech Enthusiast'
-    ].sample(frac=1)
+    ].sample(frac=1).reset_index(drop=True) 
 
     mid_customers = active_customers[
         active_customers['customer_persona'].isin(
             ['Practical Buyer', 'Everyday Shopper']
         )
-    ].sample(frac=1)
+    ].sample(frac=1).reset_index(drop=True)
 
     basic_customers = active_customers[
         active_customers['customer_persona'].isin(
             ['Bargain Hunter', 'Gift Shopper']
         )
-    ].sample(frac=1)
+    ].sample(frac=1).reset_index(drop=True) 
 
     return {
         "all_customers": active_customers,
