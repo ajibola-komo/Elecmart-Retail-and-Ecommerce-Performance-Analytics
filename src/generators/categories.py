@@ -13,9 +13,5 @@ def generate_categories(conn):
             ''')
         
         conn.execute(f'''
-                COPY DIM_CATEGORY TO '{CATEGORIES_CSV_PATH}' (FORMAT CSV, HEADER true)
-            ''')
-        
-        conn.execute(f'''
                     COPY DIM_CATEGORY TO '{CATEGORIES_PARQUET_PATH}' (FORMAT PARQUET)
 ''')

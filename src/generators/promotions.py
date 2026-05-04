@@ -132,8 +132,6 @@ def generate_promotions(conn, num_of_promotions):
 
     conn.execute("INSERT INTO DIM_PROMOTION SELECT * FROM DF_RAW")
 
-    conn.execute(f"COPY DIM_PROMOTION TO '{PROMOTIONS_CSV_PATH}' (FORMAT CSV, HEADER True) ")
-
     conn.execute(f'''
                     COPY DIM_PROMOTION TO '{PROMOTIONS_PARQUET_PATH}' (FORMAT PARQUET)
 ''')

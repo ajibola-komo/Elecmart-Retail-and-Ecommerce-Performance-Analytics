@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import bisect
 from src.generators.month_distribution import generate_online_month_distribution
 from src.generators.segment_customers import generate_customer_segments
 from src.config.paths import (CLICKSTREAMS_DDL_PATH, CLICKSTREAMS_CSV_PATH, CLICKSTREAMS_PARQUET_PATH)
@@ -240,7 +241,5 @@ def generate_clickstreams(conn,num_of_sessions_y1, num_of_sessions_y2): #conn ta
     conn.register("df_raw", df_raw)
 
     conn.execute("INSERT INTO fact_clickstream SELECT * FROM df_raw")
-    
-    conn.execute(f"COPY FACT_CLICKSTREAM TO '{CLICKSTREAMS_CSV_PATH}' (FORMAT CSV, HEADER true)")
     
     conn.execute(f'''COPY FACT_CLICKSTREAM TO '{CLICKSTREAMS_PARQUET_PATH}' (FORMAT PARQUET)''')

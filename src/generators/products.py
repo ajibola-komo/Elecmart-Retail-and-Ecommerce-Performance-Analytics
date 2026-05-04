@@ -30,9 +30,5 @@ def generate_products(conn):
             ''')
         
         conn.execute(f'''
-                COPY DIM_PRODUCT TO '{PRODUCTS_CSV_PATH}' (FORMAT CSV, HEADER true)
-            ''')
-        
-        conn.execute(f'''
                     COPY DIM_PRODUCT TO '{PRODUCTS_PARQUET_PATH}' (FORMAT PARQUET)
 ''')

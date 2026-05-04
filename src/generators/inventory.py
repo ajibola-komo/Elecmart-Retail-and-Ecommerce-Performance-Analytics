@@ -116,8 +116,6 @@ FROM final_inventory
 
     conn.execute(query)
 
-    conn.execute(F'''COPY INVENTORY TO '{INVENTORY_CSV_PATH}' (FORMAT CSV, HEADER true) ''')
-
     conn.execute(f'''
                     COPY INVENTORY TO '{INVENTORY_PARQUET_PATH}' (FORMAT PARQUET)
 ''')

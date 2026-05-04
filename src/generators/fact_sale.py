@@ -124,8 +124,6 @@ def generate_sales(conn,num_of_transactions):
 
     conn.execute('INSERT INTO FACT_SALE SELECT * FROM DF_RAW')
 
-    conn.execute(f"COPY FACT_SALE TO '{SALES_CSV_PATH}' (FORMAT CSV, HEADER true)")
-
     conn.execute(f'''
                     COPY FACT_SALE TO '{SALES_PARQUET_PATH}' (FORMAT PARQUET)
 ''')

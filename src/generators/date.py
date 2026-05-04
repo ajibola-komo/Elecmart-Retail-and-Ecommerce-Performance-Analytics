@@ -7,8 +7,6 @@ def generate_dates(conn):
 
     conn.execute(create_db)
 
-    conn.execute(f"COPY dim_date to '{DATES_CSV_PATH}' (FORMAT CSV, HEADER true)")
-
     conn.execute(f'''
                     COPY dim_date TO '{DATES_PARQUET_PATH}' (FORMAT PARQUET)
 ''')

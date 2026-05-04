@@ -11,9 +11,5 @@ def generate_subcategories(conn):
             ''')
         
         conn.execute(f'''
-                COPY DIM_SUBCATEGORY TO '{SUBCATEGORIES_CSV_PATH}' (FORMAT CSV, HEADER true)
-            ''')
-        
-        conn.execute(f'''
                     COPY DIM_SUBCATEGORY TO '{SUBCATEGORIES_PARQUET_PATH}' (FORMAT PARQUET)
 ''')

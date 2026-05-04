@@ -240,6 +240,4 @@ def generate_transactions(conn):
 
     conn.execute("INSERT INTO FACT_TRANSACTION SELECT * FROM DF_RAW")
 
-    conn.execute(f"COPY FACT_TRANSACTION TO '{TRANSACTIONS_CSV_PATH}' (FORMAT CSV, HEADER true)")
-
     conn.execute(f'''COPY FACT_TRANSACTION TO '{TRANSACTIONS_PARQUET_PATH}' (FORMAT PARQUET)''')

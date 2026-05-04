@@ -40,10 +40,6 @@ def generate_locations(conn):
                 INSERT INTO dim_location (location_id, country, state_province,city, location_type, location_weight, 
                          foot_traffic_min, foot_traffic_max) VALUES (?,?,?,?,?,?,?,?)
             ''',rows)
-        
-        conn.execute(f'''
-                    COPY dim_location TO '{LOCATION_CSV_PATH}' (FORMAT CSV, HEADER TRUE)
-            ''')
 
         conn.execute(f'''
                     COPY dim_location TO '{LOCATION_PARQUET_PATH}' (FORMAT PARQUET)

@@ -9,10 +9,6 @@ def generate_brands(conn):
                 ''')
         
         conn.execute(f'''
-                    COPY DIM_BRAND TO '{BRANDS_CSV_PATH}' (FORMAT CSV, HEADER true)
-                ''')
-        
-        conn.execute(f'''
                     COPY DIM_BRAND TO '{BRANDS_PARQUET_PATH}' (FORMAT PARQUET)
                 ''')
 

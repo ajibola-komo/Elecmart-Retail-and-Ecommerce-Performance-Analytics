@@ -224,8 +224,8 @@ PROB_OF_CAMPAIGN_LINKED_Y1 = 0.35         # Attribution
 PROB_OF_CAMPAIGN_LINKED_Y2 = 0.40         # Attribution
 PROB_OF_REPEATED_SESSION_Y1 = 0.2               # Repeat visits/sessions
 PROB_OF_REPEATED_SESSION_Y2 = 0.25               # Repeat visits/sessions
-REPEATED_SESSION_SUBSET_PREMIUM = 1.5
-REPEATED_SESSION_SUBSET_MID = 1.5
+REPEATED_SESSION_SUBSET_PREMIUM = 1.2
+REPEATED_SESSION_SUBSET_MID = 1.2
 REPEATED_SESSION_SUBSET_BASIC = 1.5
 
 #----------------------------------------- Transactions ------------------------------------------------------

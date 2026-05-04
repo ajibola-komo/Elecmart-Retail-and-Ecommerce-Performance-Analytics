@@ -174,8 +174,6 @@ def generate_customers(conn, num_of_customers):
 
     conn.execute('INSERT INTO DIM_CUSTOMER SELECT * FROM DF_RAW')
 
-    conn.execute(f"COPY DIM_CUSTOMER TO '{CUSTOMERS_CSV_PATH}' (FORMAT csv, HEADER true) ")
-
     conn.execute(f'''
                     COPY DIM_CUSTOMER TO '{CUSTOMERS_PARQUET_PATH}' (FORMAT PARQUET)
 ''')

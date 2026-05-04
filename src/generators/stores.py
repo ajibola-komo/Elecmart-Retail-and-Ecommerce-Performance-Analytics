@@ -74,7 +74,6 @@ def generate_stores(conn, num_of_stores):
 
     conn.register('df_stores', df_stores)
     conn.execute("INSERT INTO dim_store SELECT * FROM df_stores")
-    conn.execute(f"COPY dim_store TO '{STORES_CSV_PATH}' (FORMAT CSV, HEADER true)")
     conn.execute(f'''
                     COPY DIM_STORE TO '{STORES_PARQUET_PATH}' (FORMAT PARQUET)
 ''')

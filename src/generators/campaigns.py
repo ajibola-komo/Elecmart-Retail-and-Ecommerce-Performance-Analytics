@@ -91,8 +91,6 @@ def generate_campaigns(conn, number_of_campaigns):
 
     conn.execute("INSERT INTO dim_campaign SELECT * FROM DF_RAW")
 
-    conn.execute(f"COPY DIM_CAMPAIGN TO '{CAMPAIGNS_CSV_PATH}' (FORMAT CSV, HEADER TRUE)")
-
     conn.execute(f'''
                     COPY DIM_CAMPAIGN TO '{CAMPAIGNS_PARQUET_PATH}' (FORMAT PARQUET)
 ''')
